@@ -1,18 +1,9 @@
-FROM ustclug/centos:7
+FROM smartentry/centos:7-0.3.2
 
-MAINTAINER Yifan Gao "git@gaoyifan.com"
+MAINTAINER Yifan Gao <docker@yfgao.com>
 
-RUN yum install -y pptpd radiusclient-ng
+ADD . $ASSETS_DIR
 
-ENV CACHE_DIR="/etc/docker-pptp"
+RUN smartentry.sh build
 
-ENV TEMPLATES_DIR="${CACHE_DIR}/templates" \
-    ATTRIBUTE_FIX_LIST="${CACHE_DIR}/attribute_fix_list" \
-    DEFAULT_ENV="${CACHE_DIR}/default_env"
-
-COPY assets $CACHE_DIR
-
-COPY entrypoint/entrypoint.sh /sbin/entrypoint.sh
-
-ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["/usr/sbin/pptpd", "-f"]
