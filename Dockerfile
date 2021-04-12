@@ -1,9 +1,7 @@
-FROM smartentry/centos:7-0.3.8
+FROM smartentry/centos:7-0.4.4
 
 MAINTAINER Yifan Gao <docker@yfgao.com>
 
-ADD . $ASSETS_DIR
+ADD .docker $ASSETS_DIR
 
 RUN smartentry.sh build
-
-CMD ["/usr/sbin/pptpd", "-f"]
